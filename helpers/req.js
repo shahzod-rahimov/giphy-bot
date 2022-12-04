@@ -2,10 +2,13 @@ const { bot } = require("../core/bot");
 const fetch = require("node-fetch");
 const config = require("config");
 
-const req = (msg, limit) => {
+const req = (msg, limit, searchStr = "") => {
   const chatID = msg.chat.id;
   const offset = (Math.random() * 500).toFixed(0);
-  const url = `${config.get("url")}&limit=${limit}&offset=${offset}`;
+
+  let url = `${config.get("url")}&limit=${limit}&offset=${offset}`;
+
+  if (!searchStr) url += `&q=${searchStr}`;
 
   fetch(url, {
     method: "GET",
@@ -15,34 +18,24 @@ const req = (msg, limit) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      // console.log(data.data[0].user);
-      /*
-      {
-  avatar_url: 'https://media4.giphy.com/avatars/cybermarian/OaeLsFh4s1Oe.gif',
-  banner_image: '',
-  banner_url: '',
-  profile_url: 'https://giphy.com/channel/cybermarian/',
-  username: 'cybermarian',
-  display_name: 'Cyber Marian',
-  description: 'Polish YouTuber',
-  instagram_url: 'https://instagram.com/cybermarianpl',
-  website_url: 'https://www.youtube.com/user/Cybermarianpl',
-  is_verified: false
-}
-      */
       for (let i = 0; i < limit; i++) {
         let gif = data.data[i];
         let gifImg = gif.images.fixed_height.url;
         let user = data.data[0].user;
+
         let caption = {
-          caption: `GIF title: ${gif.title}\nCreated by <a href="${user.profile_url}">${user.username}</a>`,
+          caption: `<b>GIF title:</b> ${gif.title}\n`,
           parse_mode: "HTML",
         };
+
+        if (limit == 1) caption.reply_markup = { remove_keyboard: true };
+
         if (user) {
-          bot.sendAnimation(chatID, gifImg);
+          caption.caption += `<b>Created by:</b> <a href="${user.profile_url}">${user.username}</a>`;
+
+          bot.sendAnimation(chatID, gifImg, caption);
         } else {
-          console.log("Yo'q");
-          bot.sendAnimation(chatID, gifImg);
+          bot.sendAnimation(chatID, gifImg, caption);
         }
       }
     })

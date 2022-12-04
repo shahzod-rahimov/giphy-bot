@@ -13,8 +13,3 @@ bot.onText(/\/trends/, async (msg) => {
   bot.onText(/Most 5/, async (msg) => req(msg, 5));
 });
 
-/*
-https://api.giphy.com/v1/gifs/trending?api_key=Wsw6IEDWzTOrcGSuCTvsQP81u5iGGIGI&limit=3&rating=g
-
-https://api.giphy.com/v1/gifs/search?api_key=Wsw6IEDWzTOrcGSuCTvsQP81u5iGGIGI&q=tree&limit=3&offset=3&rating=g&lang=en
-*/
