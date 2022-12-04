@@ -19,7 +19,7 @@ const req = (msg, limit, searchStr = "") => {
       accept: "application/json",
     },
   })
-    .then((res) => res.json())
+    .then((res) => res.json()) 
     .then((data) => {
       // console.log(data);
       for (let i = 0; i < limit; i++) {
