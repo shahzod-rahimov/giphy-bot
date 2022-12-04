@@ -1,0 +1,21 @@
+{
+  "name": "giphy-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "server": "nodemon app.js",
+    "test": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "axios": "^1.2.0",
+    "config": "^3.3.8",
+    "node-fetch": "^2.6.7",
+    "node-telegram-bot-api": "^0.60.0"
+  }
+}
